@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VoiceShield · AI voice detection</title>
+<meta name="description" content="Is this voice real or AI-generated? Record or upload a clip; the detector runs in your browser.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23111%22/%3E%3Cpath d=%22M50 18l26 10v20c0 18-12 30-26 36-14-6-26-18-26-36V28z%22 fill=%22%23E8F542%22/%3E%3C/svg%3E">
+<style>
+  :root { color-scheme: light; --bg:#F2F2EF; --card:#FAFAF8; --ink:#111; --ink2:#3d3d3d; --muted:#6B6B6B; --line:#e2e2dd; --y:#E8F542; --real:#1f7a3a; --fake:#b42318; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 "Manrope","Inter","Segoe UI Variable","Segoe UI",system-ui,sans-serif; }
+  .wrap { max-width:1120px; margin:0 auto; padding:28px 16px 56px; }
+  .top { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); }
+  .top b { color:var(--ink); }
+  h1 { font-size:clamp(44px,8vw,88px); line-height:.95; letter-spacing:-.04em; margin:26px 0 12px; font-weight:800; }
+  h1 span { font-weight:300; }
+  .usp { font-size:clamp(18px,2.4vw,24px); max-width:720px; margin:0 0 24px; color:var(--ink2); }
+  .usp mark { background:var(--y); padding:0 6px; border-radius:6px; }
+  .grid { display:grid; grid-template-columns:340px 1fr; gap:18px; }
+  @media (max-width:860px) { .grid { grid-template-columns:1fr; } }
+  .card { background:var(--card); border-radius:28px; padding:22px; }
+  .card.dark { background:var(--ink); color:#fff; }
+  .num { font-size:13px; font-weight:700; color:var(--muted); letter-spacing:.08em; }
+  .btn { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; border:0; border-radius:999px; padding:14px 18px;
+         font:700 16px inherit; cursor:pointer; margin-top:10px; }
+  .btn.rec { background:var(--y); color:var(--ink); }
+  .btn.rec.on { background:var(--fake); color:#fff; }
+  .btn.ghost { background:transparent; border:1.5px solid var(--ink); color:var(--ink); }
+  .btn:disabled { opacity:.45; cursor:not-allowed; }
+  .samples { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .chip { border:1.5px solid var(--line); background:#fff; border-radius:999px; padding:6px 12px; font:600 13px inherit; cursor:pointer; }
+  .chip { padding:5px 10px; font-size:12.5px; }
+  .chip.real { border-color:#9ed3ad; }
+  .chip[aria-pressed="true"] { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .note { font-size:13px; color:var(--muted); margin-top:12px; }
+  .verdict { display:flex; flex-wrap:wrap; align-items:center; gap:16px 24px; }
+  .badge { font-size:clamp(34px,5vw,54px); font-weight:800; letter-spacing:-.03em; line-height:1; }
+  .badge.real { color:var(--real); } .badge.fake { color:var(--fake); } .badge.wait { color:var(--muted); font-size:28px; }
+  .meter { flex:1 1 260px; }
+  .bar { position:relative; height:12px; border-radius:99px; background:linear-gradient(90deg,#f3c7c2,#eee 50%,#c8e6d0); }
+  .bar i { position:absolute; top:-5px; width:4px; height:22px; border-radius:3px; background:var(--ink); left:50%; transform:translateX(-50%); transition:left .3s; }
+  .scale { display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-top:6px; }
+  canvas { width:100%; height:auto; display:block; border-radius:18px; background:#111; margin-top:16px; }
+  .windows { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
+  .win { flex:1 1 60px; border-radius:12px; padding:6px 8px; font-size:12px; background:#fff; border:1px solid var(--line); }
+  .win b { display:block; font-size:14px; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px; }
+  @media (max-width:860px) { .two { grid-template-columns:1fr; } }
+  h2 { font-size:24px; letter-spacing:-.02em; margin:4px 0 8px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  td, th { text-align:left; padding:7px 4px; border-bottom:1px solid var(--line); }
+  th { font-weight:700; } td.n { font-variant-numeric:tabular-nums; }
+  .dark td, .dark th { border-color:#333; } .dark .note { color:#b9b9b9; }
+  .star { display:inline-grid; place-items:center; width:34px; height:34px; border-radius:10px; background:var(--y); color:var(--ink); font-weight:800; margin-right:8px; }
+  footer { margin-top:24px; font-size:13px; color:var(--muted); }
+  a { color:inherit; }
+  .err { color:var(--fake); font-weight:700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><b>VoiceShield</b><span>AI voice detection · runs in your browser</span></div>
+  <h1>Real voice<br><span>or AI clone?</span></h1>
+  <p class="usp">Record a few seconds or upload a clip. VoiceShield flags <mark>synthetic and cloned speech</mark> in seconds, and your audio never leaves your device.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="num">01 · INPUT</div>
+      <button class="btn rec" id="rec">● Record 4 seconds</button>
+      <label class="btn ghost" style="margin-top:10px">Upload audio<input id="file" type="file" accept="audio/*,.flac,.wav,.mp3,.m4a,.ogg" hidden></label>
+      <div class="num" style="margin-top:18px">OR TRY A TEST CLIP · REAL OR ONE OF 13 AI SYSTEMS</div>
+      <div class="samples" id="samples"></div>
+      <p class="note">Test clips are from the ASVspoof 2019 evaluation set, never used in training: real speakers and 13 different speech-synthesis and voice-conversion systems.</p>
+    </div>
+    <div class="card">
+      <div class="num">02 · VERDICT</div>
+      <div class="verdict" style="margin-top:8px">
+        <div class="badge wait" id="badge">Loading model…</div>
+        <div class="meter">
+          <div class="bar"><i id="needle"></i></div>
+          <div class="scale"><span>AI-generated</span><span>threshold</span><span>Real</span></div>
+        </div>
+      </div>
+      <div class="note" id="detail"></div>
+      <canvas id="spec" width="900" height="220"></canvas>
+      <div class="windows" id="windows"></div>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="card dark">
+      <h2><span class="star">✳</span>How good is it?</h2>
+      <table id="stats"><tr><td>Loading…</td></tr></table>
+      <p class="note" id="statsNote"></p>
+    </div>
+    <div class="card">
+      <h2>How it works</h2>
+      <p style="margin:0">A graph-attention network (AASIST) reads the raw waveform: learnable band-pass filters, a residual encoder,
+        then one graph over <b>frequency bands</b> and one over <b>time frames</b>, fused by a heterogeneous graph with a master node.
+        It learns the tiny spectral and timing artefacts that vocoders leave behind.</p>
+      <p class="note">Trained on ASVspoof 2019 LA (English read speech, 2019-era synthesis). Newer commercial voice-cloning tools can be harder to catch:
+        treat this as a screening signal, not proof. <a href="https://github.com/Priyanshu-Singh-git/voiceshield">Code, benchmark and limits</a>.</p>
+    </div>
+  </div>
+  <footer>Built by <b>Priyanshu Singh</b>, freelance AI / ML engineer · Need fraud screening for calls, voice logins or uploads? Get in touch. · Data: ASVspoof 2019 (ODC-By).</footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.19.2/dist/ort.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

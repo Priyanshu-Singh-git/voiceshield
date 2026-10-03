@@ -1,0 +1,141 @@
+{
+  "model": "voiceshield_aasist.onnx",
+  "threshold": -4.532227,
+  "scale": 9.297087570283592,
+  "dev_eer": 0.00391334599584638,
+  "samples": [
+    {
+      "file": "samples/LA_E_3293846.flac",
+      "label": "Real 1",
+      "title": "Real speaker",
+      "attack": "-",
+      "py_score": 13.429956436157227
+    },
+    {
+      "file": "samples/LA_E_5034602.flac",
+      "label": "Real 2",
+      "title": "Real speaker",
+      "attack": "-",
+      "py_score": 9.497032165527344
+    },
+    {
+      "file": "samples/LA_E_6360591.flac",
+      "label": "Real 3",
+      "title": "Real speaker",
+      "attack": "-",
+      "py_score": 13.042695999145508
+    },
+    {
+      "file": "samples/LA_E_8677439.flac",
+      "label": "Real 4",
+      "title": "Real speaker",
+      "attack": "-",
+      "py_score": 10.318349838256836
+    },
+    {
+      "file": "samples/LA_E_2525853.flac",
+      "label": "A07 TTS",
+      "title": "A07: TTS + WORLD vocoder",
+      "attack": "A07",
+      "py_score": -7.570564270019531
+    },
+    {
+      "file": "samples/LA_E_7271847.flac",
+      "label": "A08 TTS",
+      "title": "A08: neural TTS",
+      "attack": "A08",
+      "py_score": -20.893556594848633
+    },
+    {
+      "file": "samples/LA_E_1347934.flac",
+      "label": "A09 TTS",
+      "title": "A09: TTS (LSTM)",
+      "attack": "A09",
+      "py_score": -22.306318283081055
+    },
+    {
+      "file": "samples/LA_E_9516732.flac",
+      "label": "A10 TTS",
+      "title": "A10: Tacotron-style TTS",
+      "attack": "A10",
+      "py_score": -7.757906913757324
+    },
+    {
+      "file": "samples/LA_E_1072722.flac",
+      "label": "A11 TTS",
+      "title": "A11: Tacotron + Griffin-Lim",
+      "attack": "A11",
+      "py_score": -18.910432815551758
+    },
+    {
+      "file": "samples/LA_E_3674498.flac",
+      "label": "A12 TTS",
+      "title": "A12: WaveNet TTS",
+      "attack": "A12",
+      "py_score": -4.997200012207031
+    },
+    {
+      "file": "samples/LA_E_7721116.flac",
+      "label": "A13 VC",
+      "title": "A13: TTS + voice conversion",
+      "attack": "A13",
+      "py_score": -16.61973762512207
+    },
+    {
+      "file": "samples/LA_E_6419846.flac",
+      "label": "A14 TTS",
+      "title": "A14: TTS + VC",
+      "attack": "A14",
+      "py_score": -16.091001510620117
+    },
+    {
+      "file": "samples/LA_E_7946751.flac",
+      "label": "A15 TTS",
+      "title": "A15: TTS + VC (WaveNet)",
+      "attack": "A15",
+      "py_score": -8.512605667114258
+    },
+    {
+      "file": "samples/LA_E_9399610.flac",
+      "label": "A16 TTS",
+      "title": "A16: TTS (seen type A04)",
+      "attack": "A16",
+      "py_score": -16.42999839782715
+    },
+    {
+      "file": "samples/LA_E_7601625.flac",
+      "label": "A17 VC",
+      "title": "A17: voice conversion",
+      "attack": "A17",
+      "py_score": -16.3792667388916
+    },
+    {
+      "file": "samples/LA_E_9106891.flac",
+      "label": "A18 VC",
+      "title": "A18: voice conversion (i-vector)",
+      "attack": "A18",
+      "py_score": -9.669136047363281
+    }
+  ],
+  "stats": {
+    "rows": [
+      {
+        "label": "Equal error rate (lower is better)",
+        "value": "1.40%"
+      },
+      {
+        "label": "min t-DCF (official ASVspoof metric)",
+        "value": "0.042"
+      },
+      {
+        "label": "Test clips (real / AI)",
+        "value": "7,355 / 63,882"
+      },
+      {
+        "label": "Model size",
+        "value": "297,866 parameters"
+      }
+    ],
+    "note": "ASVspoof 2019 LA evaluation set: 71,237 clips, 13 attack systems, 11 of them never seen in training."
+  }
+}

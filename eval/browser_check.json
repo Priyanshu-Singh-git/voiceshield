@@ -1,0 +1,105 @@
+{
+  "clips": 16,
+  "max_score_diff": 0.7264723777770996,
+  "verdict_flips": 0,
+  "median_ms": 1088.9000000953674,
+  "console_errors": [],
+  "rows": [
+    {
+      "label": "Real 1",
+      "browser": 13.42997407913208,
+      "python": 13.429956436157227,
+      "real": true
+    },
+    {
+      "label": "Real 2",
+      "browser": 9.496767044067383,
+      "python": 9.497032165527344,
+      "real": true
+    },
+    {
+      "label": "Real 3",
+      "browser": 13.04256534576416,
+      "python": 13.042695999145508,
+      "real": true
+    },
+    {
+      "label": "Real 4",
+      "browser": 10.318385124206543,
+      "python": 10.318349838256836,
+      "real": true
+    },
+    {
+      "label": "A07 TTS",
+      "browser": -7.570671081542969,
+      "python": -7.570564270019531,
+      "real": false
+    },
+    {
+      "label": "A08 TTS",
+      "browser": -20.167084217071533,
+      "python": -20.893556594848633,
+      "real": false
+    },
+    {
+      "label": "A09 TTS",
+      "browser": -22.30668067932129,
+      "python": -22.306318283081055,
+      "real": false
+    },
+    {
+      "label": "A10 TTS",
+      "browser": -7.757857799530029,
+      "python": -7.757906913757324,
+      "real": false
+    },
+    {
+      "label": "A11 TTS",
+      "browser": -18.91045093536377,
+      "python": -18.910432815551758,
+      "real": false
+    },
+    {
+      "label": "A12 TTS",
+      "browser": -4.997426271438599,
+      "python": -4.997200012207031,
+      "real": false
+    },
+    {
+      "label": "A13 VC",
+      "browser": -16.61960458755493,
+      "python": -16.61973762512207,
+      "real": false
+    },
+    {
+      "label": "A14 TTS",
+      "browser": -15.752237319946289,
+      "python": -16.091001510620117,
+      "real": false
+    },
+    {
+      "label": "A15 TTS",
+      "browser": -8.512713432312012,
+      "python": -8.512605667114258,
+      "real": false
+    },
+    {
+      "label": "A16 TTS",
+      "browser": -16.43014669418335,
+      "python": -16.42999839782715,
+      "real": false
+    },
+    {
+      "label": "A17 VC",
+      "browser": -16.3793044090271,
+      "python": -16.3792667388916,
+      "real": false
+    },
+    {
+      "label": "A18 VC",
+      "browser": -9.668927192687988,
+      "python": -9.669136047363281,
+      "real": false
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+data/
+kaggle_runs/
+models/trained/rawnet2.pt
+.cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+presentation/node_modules/
+presentation/deck_data.json
+human_value_report/
+.cache_pick.txt
+kaggle_jobs/
+models/official/*.pth
+models/official/

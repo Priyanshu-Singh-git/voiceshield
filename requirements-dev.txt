@@ -1,0 +1,8 @@
+-r requirements.txt
+matplotlib
+pillow
+pytest
+onnx
+onnxruntime
+playwright
+qrcode
